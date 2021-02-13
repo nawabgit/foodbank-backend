@@ -33,7 +33,7 @@ def find_food_banks():
 		}
 		response = requests.get("http://api.pexels.com/v1/search", headers=headers, params=params)
 		image_data = response.json()
-		i = image_data["photos"][random.randint(0,50)]["src"]["small"]
+		i = image_data["photos"][random.randint(0,50)]["src"]["medium"]
 		d["image"] = i
 		new_data.append(d)
 
@@ -68,7 +68,7 @@ def donate():
 		}
 		response = requests.get("http://api.pexels.com/v1/search", headers=headers, params=params)
 		image_data = response.json()
-		i = image_data["photos"][random.randint(0,50)]["src"]["small"]
+		i = image_data["photos"][random.randint(0,50)]["src"]["medium"]
 		donations[username] = {"image":  i, "donations": [] }
 
 	donations[username]["donations"].append(data)
