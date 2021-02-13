@@ -32,6 +32,7 @@ def find_food_banks():
 
 
 @app.route("/donate", methods=["POST"])
+@cross_origin()
 def donate():
 	data = request.json
 
@@ -62,6 +63,7 @@ def donate():
 
 
 @app.route("/userdonations", methods=["GET"])
+@cross_origin()
 def donations():
 	username = request.args.get("username")
 
@@ -72,6 +74,7 @@ def donations():
 
 
 @app.route("/getalldonations", methods=["GET"])
+@cross_origin()
 def get_all_donations():
 	with open("donations.json", "r") as f:
 		donations = json.load(f)
@@ -85,11 +88,12 @@ def get_all_donations():
 	return jsonify({"data": all_donations})
 
 
-@app.route("/changestatus", methods=["POST"])
+@app.route("/changestatus", methods=["GET"])
+@cross_origin()
 def change_donation_status():
 	data = request.json
-	donation_id = data["donationid"]
-	status = data["status"]
+	donation_id = request.args.get("donationid")
+	status = request.args.get("status")
 	with open("donations.json", "r") as f:
 		donations = json.load(f)
 
