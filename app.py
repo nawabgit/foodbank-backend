@@ -36,16 +36,12 @@ def donate():
 	data = request.json
 
 	data["status"] = "Pending"
-	data["donationid"] = uuid.uuid1()
+	data["donationid"] = str(uuid.uuid1())
 
 	with urllib.request.urlopen("http://api.postcodes.io/postcodes/"+data["postcode"]) as url:
 		post_code_data = json.loads(url.read().decode())
 	data["start_lat"] = post_code_data["result"]["latitude"]
 	data["start_lon"] = post_code_data["result"]["longitude"]
-
-	with urllib.request.urlopen("https://pixabay.com/api/?key=20264091-9dd4924b9809ecb1b3a929e33&q"+data["name"]) as url:
-		i = json.loads(url.read().decode())["hits"][0]["webformatURL"]
-	data["image"] = i
 
 	with open("donations.json", "r") as f:
 		donations = json.load(f)
