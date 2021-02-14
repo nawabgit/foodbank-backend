@@ -18,21 +18,21 @@ def find_food_banks():
 
 	new_data = []
 	import random
+	headers = {
+		"Authorization": '563492ad6f917000010000013783b70d2b73467a8fd8f19f7f9d4097'
+	}
+	params = {
+		"query": "charity",
+		"per_page": 100,
+		"page": 3
+	}
+	response = requests.get("http://api.pexels.com/v1/search", headers=headers, params=params)
+	image_data = response.json()
 
 	for x in data:
 		d = {"name": x["name"], "location": x["address"], "needs": x["needs"], "phone": x["phone"],
 		     "url": x["urls"]["homepage"], "priority": generate_priority(x["name"]), "lat": x["lat_lng"].split(",")[0], "lon":x["lat_lng"].split(",")[1], "distance":x["distance_m"]}
 
-		headers = {
-			"Authorization": '563492ad6f917000010000013783b70d2b73467a8fd8f19f7f9d4097'
-		}
-		params = {
-			"query": "charity",
-			"per_page": 100,
-			"page": 3
-		}
-		response = requests.get("http://api.pexels.com/v1/search", headers=headers, params=params)
-		image_data = response.json()
 		i = image_data["photos"][random.randint(0,50)]["src"]["medium"]
 		d["image"] = i
 		new_data.append(d)
@@ -47,6 +47,16 @@ def donate():
 
 	data["status"] = "Pending"
 	data["donationid"] = str(uuid.uuid1())
+	headers = {
+		"Authorization": '563492ad6f917000010000013783b70d2b73467a8fd8f19f7f9d4097'
+	}
+	params = {
+		"query": "person",
+		"per_page": 100,
+		"page": 3
+	}
+	response = requests.get("http://api.pexels.com/v1/search", headers=headers, params=params)
+	image_data = response.json()
 
 	with urllib.request.urlopen("http://api.postcodes.io/postcodes/"+data["postcode"]) as url:
 		post_code_data = json.loads(url.read().decode())
@@ -58,16 +68,6 @@ def donate():
 
 	username = data["username"]
 	if username not in donations:
-		headers = {
-			"Authorization": '563492ad6f917000010000013783b70d2b73467a8fd8f19f7f9d4097'
-		}
-		params = {
-			"query": "person",
-			"per_page": 100,
-			"page": 3
-		}
-		response = requests.get("http://api.pexels.com/v1/search", headers=headers, params=params)
-		image_data = response.json()
 		i = image_data["photos"][random.randint(0,50)]["src"]["medium"]
 		donations[username] = {"image":  i, "donations": [] }
 
