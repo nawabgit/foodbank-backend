@@ -113,7 +113,7 @@ def get_all_donations():
 	all_donations = []
 	for k, v in donations.items():
 		for items in v["donations"]:
-			if items["status"] == "Pending":
+			if items["status"] in ("Pending", "InProgress"):
 				all_donations.append(items)
 
 	return jsonify({"data": all_donations})
