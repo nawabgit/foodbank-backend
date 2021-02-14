@@ -47,8 +47,8 @@ def validate_date(date_text):
         dateutil.parser.parse(date_text)
     except ValueError:
         return False
-	else:
-		return True
+    else:
+        return True
 
 
 @app.route("/donate", methods=["POST"])
