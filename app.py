@@ -19,7 +19,8 @@ def find_food_banks():
 	new_data = []
 	import random
 	headers = {
-		"Authorization": '563492ad6f917000010000013783b70d2b73467a8fd8f19f7f9d4097'
+		"Authorization": '563492ad6f917000010000015c451fa13b65484e93b2a3aab6691039'
+
 	}
 	params = {
 		"query": "charity",
@@ -48,7 +49,7 @@ def donate():
 	data["status"] = "Pending"
 	data["donationid"] = str(uuid.uuid1())
 	headers = {
-		"Authorization": '563492ad6f917000010000013783b70d2b73467a8fd8f19f7f9d4097'
+		"Authorization": '563492ad6f917000010000015c451fa13b65484e93b2a3aab6691039'
 	}
 	params = {
 		"query": "person",
