@@ -101,6 +101,9 @@ def donations():
 	with open("donations.json", "r") as f:
 		donations = json.load(f)
 
+	if username not in donations:
+		return jsonify({"data": []})
+
 	return jsonify({"data": donations[username]})
 
 
