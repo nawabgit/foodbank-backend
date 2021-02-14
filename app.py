@@ -125,6 +125,13 @@ def change_donation_status():
 	return jsonify({200: "success"})
 
 
+@app.route("/purgedatabase")
+@cross_origin()
+def purge_database():
+	with open("donations.json", "w") as f:
+		json.dump("{}", f)
+
+
 def generate_priority(name):
 	if ord(name[0]) % 3 == 0:
 		return "High"
