@@ -102,7 +102,22 @@ def donations():
 		donations = json.load(f)
 
 	if username not in donations:
-		return jsonify({"data": []})
+		headers = {
+			"Authorization": '563492ad6f917000010000015c451fa13b65484e93b2a3aab6691039'
+		}
+		params = {
+			"query": "person",
+			"per_page": 100,
+			"page": 3
+		}
+		response = requests.get("http://api.pexels.com/v1/search", headers=headers, params=params)
+		image_data = response.json()
+
+		return jsonify({"data": {
+			"image" : image_data["photos"][random.randint(0,50)]["src"]["medium"],
+			"donations" : []
+			}
+		})
 
 	return jsonify({"data": donations[username]})
 
