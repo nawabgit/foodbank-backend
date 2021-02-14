@@ -116,8 +116,9 @@ def change_donation_status():
 		donations = json.load(f)
 
 	for k, v in donations.items():
-		if v["donationid"] == donation_id:
-			v["status"] = status
+		for items in v["donations"]:
+			if items["donationid"] == donation_id:
+				items["status"] = status
 
 	with open("donations.json", "w") as f:
 		json.dump(donations, f)
