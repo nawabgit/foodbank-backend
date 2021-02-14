@@ -5,6 +5,7 @@ import uuid
 import random
 from flask_cors import cross_origin, CORS
 import requests
+import dateutil.parser
 
 app = Flask(__name__)
 
@@ -41,10 +42,22 @@ def find_food_banks():
 	return jsonify(new_data)
 
 
+def validate_date(date_text):
+    try:
+        dateutil.parser.parse(date_text)
+    except ValueError:
+        return False
+	else:
+		return True
+
+
 @app.route("/donate", methods=["POST"])
 @cross_origin()
 def donate():
 	data = request.json
+
+	if not validate_date(data['info']['dateTime']):
+		return jsonify({200: "success"}) 
 
 	data["status"] = "Pending"
 	data["donationid"] = str(uuid.uuid1())
